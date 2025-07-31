@@ -1,9 +1,9 @@
-# Maintainer: artist for the official Xlibre project
+# Maintainer: artist for Xlibre
 
 pkgbase=xlibre-xserver
 pkgname=($pkgbase $pkgbase-xephyr $pkgbase-xvfb $pkgbase-xnest $pkgbase-common $pkgbase-devel)
 pkgver=25.0.0.7
-pkgrel=2
+pkgrel=3
 arch=('x86_64' 'aarch64')
 license=('LicenseRef-Adobe-Display-PostScript'
          'BSD-3-Clause' 
@@ -36,29 +36,35 @@ source=("https://codeload.github.com/X11Libre/xserver/tar.gz/refs/tags/xlibre-xs
         xvfb-run.1)
 
 build() {
-  case "$CARCH" in
-    "x86_64")
-      CFLAGS=" -march=x86-64"
-      ;;
-    "aarch64")
-      CFLAGS=" -march=aarch64"
-      ;;
-    *)
-      CFLAGS=" -march=native"
-      ;;
-  esac
+  if [[ ! "$CFLAGS" == *"-march="* ]]; then
+    case "$CARCH" in
+      "x86_64")
+        CFLAGS+=" -march=x86-64"
+        ;;
+      "aarch64")
+        CFLAGS+=" -march=aarch64"
+        ;;
+      *)
+        CFLAGS+=" -march=native"
+        ;;
+    esac
+  fi
   CFLAGS+=" -mtune=generic -O2 -pipe -fexceptions -Wp,-D_FORTIFY_SOURCE=3 -Wformat -Werror=format-security"
   CFLAGS+=" -fstack-clash-protection -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer"
   LDFLAGS=" -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,lazy -Wl,-z,relro -Wl,-z,pack-relative-relocs"
-  if [[ $CARCH != 'aarch64' ]]; then
-    CFLAGS+=" -fcf-protection"
+  if [[ $CARCH == 'aarch64' ]]; then
+    CFLAGS=${CFLAGS/-fcf-protection}
   fi
   if [[ "$pkgname" == *"xf86-input"* ]]; then
     CFLAGS+=" -fno-plt"
     LDFLAGS+=" -Wl,-z,now"
+  else
+    CFLAGS=${CFLAGS/-fno-plt}
   fi
   if [[ "$pkgname" == *"xf86-video-intel"* ]]; then
+    CFLAGS=${CFLAGS/-flto*}
     CFLAGS+=" -fno-lto"
+    LDFLAGS=${CFLAGS/-flto*}
     LDFLAGS+=" -fno-lto"
   fi
   CXXFLAGS="${CFLAGS} -Wp,-D_GLIBCXX_ASSERTIONS"
@@ -107,7 +113,7 @@ _install() {
 }
 
 package_xlibre-xserver-common() {
-  pkgdesc="Official XLibre fork of X.Org Xorg server common files"
+  pkgdesc="XLibre fork of X.Org Xorg server common files"
   depends=(xkeyboard-config xorg-xkbcomp xorg-setxkbmap)
   provides=('xorg-server-common')
   conflicts=('xorg-server-common')
@@ -121,7 +127,7 @@ package_xlibre-xserver-common() {
 }
 
 package_xlibre-xserver() {
-  pkgdesc="Official XLibre fork of X.Org X server"
+  pkgdesc="XLibre fork of X.Org X server"
   depends=(xlibre-xserver-common xlibre-xf86-input-libinput libepoxy libxfont2 pixman libunwind
            dbus libgl nettle libxdmcp sh glibc libxau libtirpc
            libpciaccess libdrm libxshmfence libxcvt) # FS#52949
@@ -148,7 +154,7 @@ package_xlibre-xserver() {
 }
 
 package_xlibre-xserver-xephyr() {
-  pkgdesc="Official XLibre fork of X.Org nested X server that runs as an X application"
+  pkgdesc="XLibre fork of X.Org nested X server that runs as an X application"
   depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libgl libepoxy libunwind
            xcb-util-image xcb-util-renderutil xcb-util-wm xcb-util-keysyms pixman
            nettle libtirpc xcb-util libxdmcp libx11 libxau libxshmfence glibc)
@@ -163,7 +169,7 @@ package_xlibre-xserver-xephyr() {
 }
 
 package_xlibre-xserver-xvfb() {
-  pkgdesc="Official XLibre fork of X.Org virtual framebuffer X server"
+  pkgdesc="XLibre fork of X.Org virtual framebuffer X server"
   # xvfb-run is GPLv2, rest is MIT
   license=('MIT' 'GPL-2.0-only')
   depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind pixman xorg-xauth 
@@ -182,7 +188,7 @@ package_xlibre-xserver-xvfb() {
 }
 
 package_xlibre-xserver-xnest() {
-  pkgdesc="Official XLibre fork of X.Org nested X server that runs as an X application"
+  pkgdesc="XLibre fork of X.Org nested X server that runs as an X application"
   depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind libxext pixman nettle
            libtirpc libxdmcp glibc libx11 libxau)
   provides=('xorg-server-xnest')
@@ -196,7 +202,7 @@ package_xlibre-xserver-xnest() {
 }
 
 package_xlibre-xserver-devel() {
-  pkgdesc="Official XLibre fork of X.Org development files for the X.Org X server"
+  pkgdesc="XLibre fork of X.Org development files for the X.Org X server"
   depends=('xorgproto' 'mesa' 'libpciaccess' 'pixman'
            # not technically required but almost every Xorg pkg needs it to build
            'xorg-util-macros')
