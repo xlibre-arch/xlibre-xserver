@@ -3,7 +3,7 @@
 pkgbase=xlibre-xserver
 pkgname=($pkgbase $pkgbase-xephyr $pkgbase-xvfb $pkgbase-xnest $pkgbase-common $pkgbase-devel)
 pkgver=25.0.0.7
-pkgrel=3
+pkgrel=5
 arch=('x86_64' 'aarch64')
 license=('LicenseRef-Adobe-Display-PostScript'
          'BSD-3-Clause' 
@@ -113,7 +113,7 @@ _install() {
 }
 
 package_xlibre-xserver-common() {
-  pkgdesc="XLibre fork of X.Org Xorg server common files"
+  pkgdesc="Official XLibre fork of X.Org Xorg server common files"
   depends=(xkeyboard-config xorg-xkbcomp xorg-setxkbmap)
   provides=('xorg-server-common')
   conflicts=('xorg-server-common')
@@ -127,7 +127,7 @@ package_xlibre-xserver-common() {
 }
 
 package_xlibre-xserver() {
-  pkgdesc="XLibre fork of X.Org X server"
+  pkgdesc="Official XLibre fork of X.Org X server"
   depends=(xlibre-xserver-common xlibre-xf86-input-libinput libepoxy libxfont2 pixman libunwind
            dbus libgl nettle libxdmcp sh glibc libxau libtirpc
            libpciaccess libdrm libxshmfence libxcvt) # FS#52949
@@ -154,7 +154,7 @@ package_xlibre-xserver() {
 }
 
 package_xlibre-xserver-xephyr() {
-  pkgdesc="XLibre fork of X.Org nested X server that runs as an X application"
+  pkgdesc="Official XLibre fork of X.Org nested X server that runs as an X application"
   depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libgl libepoxy libunwind
            xcb-util-image xcb-util-renderutil xcb-util-wm xcb-util-keysyms pixman
            nettle libtirpc xcb-util libxdmcp libx11 libxau libxshmfence glibc)
@@ -169,7 +169,7 @@ package_xlibre-xserver-xephyr() {
 }
 
 package_xlibre-xserver-xvfb() {
-  pkgdesc="XLibre fork of X.Org virtual framebuffer X server"
+  pkgdesc="Official XLibre fork of X.Org virtual framebuffer X server"
   # xvfb-run is GPLv2, rest is MIT
   license=('MIT' 'GPL-2.0-only')
   depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind pixman xorg-xauth 
@@ -188,7 +188,7 @@ package_xlibre-xserver-xvfb() {
 }
 
 package_xlibre-xserver-xnest() {
-  pkgdesc="XLibre fork of X.Org nested X server that runs as an X application"
+  pkgdesc="Official XLibre fork of X.Org nested X server that runs as an X application"
   depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind libxext pixman nettle
            libtirpc libxdmcp glibc libx11 libxau)
   provides=('xorg-server-xnest')
@@ -202,7 +202,7 @@ package_xlibre-xserver-xnest() {
 }
 
 package_xlibre-xserver-devel() {
-  pkgdesc="XLibre fork of X.Org development files for the X.Org X server"
+  pkgdesc="Official XLibre fork of X.Org development files for the X.Org X server"
   depends=('xorgproto' 'mesa' 'libpciaccess' 'pixman'
            # not technically required but almost every Xorg pkg needs it to build
            'xorg-util-macros')

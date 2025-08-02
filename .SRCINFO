@@ -1,6 +1,6 @@
 pkgbase = xlibre-xserver
 	pkgver = 25.0.0.7
-	pkgrel = 3
+	pkgrel = 5
 	url = https://github.com/X11Libre/xserver
 	arch = x86_64
 	arch = aarch64
@@ -72,7 +72,7 @@ pkgbase = xlibre-xserver
 	sha256sums = 2460adccd3362fefd4cdc5f1c70f332d7b578091fb9167bf88b5f91265bbd776
 
 pkgname = xlibre-xserver
-	pkgdesc = XLibre fork of X.Org X server
+	pkgdesc = Official XLibre fork of X.Org X server
 	install = xlibre-xserver.install
 	depends = xlibre-xserver-common
 	depends = xlibre-xf86-input-libinput
@@ -106,7 +106,7 @@ pkgname = xlibre-xserver
 	replaces = xf86-video-modesetting
 
 pkgname = xlibre-xserver-xephyr
-	pkgdesc = XLibre fork of X.Org nested X server that runs as an X application
+	pkgdesc = Official XLibre fork of X.Org nested X server that runs as an X application
 	depends = xlibre-xserver-common
 	depends = X-ABI-XINPUT_VERSION=26.0
 	depends = libxfont2
@@ -130,7 +130,7 @@ pkgname = xlibre-xserver-xephyr
 	conflicts = xorg-server-xephyr
 
 pkgname = xlibre-xserver-xvfb
-	pkgdesc = XLibre fork of X.Org virtual framebuffer X server
+	pkgdesc = Official XLibre fork of X.Org virtual framebuffer X server
 	license = MIT
 	license = GPL-2.0-only
 	depends = xlibre-xserver-common
@@ -150,7 +150,7 @@ pkgname = xlibre-xserver-xvfb
 	conflicts = xorg-server-xvfb
 
 pkgname = xlibre-xserver-xnest
-	pkgdesc = XLibre fork of X.Org nested X server that runs as an X application
+	pkgdesc = Official XLibre fork of X.Org nested X server that runs as an X application
 	depends = xlibre-xserver-common
 	depends = X-ABI-XINPUT_VERSION=26.0
 	depends = libxfont2
@@ -167,7 +167,7 @@ pkgname = xlibre-xserver-xnest
 	conflicts = xorg-server-xnest
 
 pkgname = xlibre-xserver-common
-	pkgdesc = XLibre fork of X.Org Xorg server common files
+	pkgdesc = Official XLibre fork of X.Org Xorg server common files
 	depends = xkeyboard-config
 	depends = xorg-xkbcomp
 	depends = xorg-setxkbmap
@@ -175,7 +175,7 @@ pkgname = xlibre-xserver-common
 	conflicts = xorg-server-common
 
 pkgname = xlibre-xserver-devel
-	pkgdesc = XLibre fork of X.Org development files for the X.Org X server
+	pkgdesc = Official XLibre fork of X.Org development files for the X.Org X server
 	depends = xorgproto
 	depends = mesa
 	depends = libpciaccess
