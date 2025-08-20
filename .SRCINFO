@@ -91,6 +91,8 @@ pkgname = xlibre-xserver
 	conflicts = xf86-video-modesetting
 	conflicts = xlibre-server
 	replaces = xlibre-xserver-bootstrap
+	replaces = glamor-egl
+	replaces = xf86-video-modesetting
 	options = emptydirs
 
 pkgname = xlibre-xserver-bootstrap

@@ -69,7 +69,7 @@ package_xlibre-xserver() {
   # and /usr/lib/pkgconfig/xorg-server.pc in xlibre-xserver-devel pkg
   provides=('X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'xorg-server')
   conflicts=('xorg-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting' 'xlibre-server')
-  replaces=('xlibre-xserver-bootstrap') # 'glamor-egl' 'xf86-video-modesetting'
+  replaces=('xlibre-xserver-bootstrap' 'glamor-egl' 'xf86-video-modesetting')
   options=('emptydirs')
   install="${pkgname}.install"
 
@@ -196,3 +196,4 @@ package_xlibre-xserver-xvfb() {
   install -vDm755 "xvfb-run"   "${pkgdir}/usr/bin/xvfb-run"
   install -vDm644 "xvfb-run.1" "${pkgdir}/usr/share/man/man1/xvfb-run.1" # outda
 }
+
