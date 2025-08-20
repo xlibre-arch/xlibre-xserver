@@ -1,25 +1,18 @@
 post_upgrade() {
-  cat <<MSG1
->>> Closed source drivers - like those from Nvidia - might not
-    have an updated ABI version to match xlibre-xserver.
-    To prevent problems with these drivers create this file:
-
-    /etc/X11/xorg.conf.d/xlibre.conf
-
-    Section "ServerFlags"
-        Option "IgnoreABI" "true"
-    EndSection
-
-MSG1
+  if (( $(vercmp $2 1.16.0-3) < 0 )); then
+    post_install
+  fi
 }
 
 post_install() {
-  post_upgrade
-  cat <<MSG2
->>> It is required to replace all installed xf86* xorg driver and
-    xorg-server* packages with their xlibre6* counterparts.
-    If for example xf86-video-intel is installed this should be
-    replaced with xlibre-xf86-video-intel.
+  cat <<MSG
+>>> xlibre-server has now the ability to run without root rights with
+    the help of systemd-logind. xserver will fail to run if not launched
+    from the same virtual terminal as was used to log in.
+    Without root rights, log files will be in ~/.local/share/xorg/ directory.
 
-MSG2
+    Old behavior can be restored through Xorg.wrap config file.
+    See Xorg.wrap man page (man xorg.wrap).
+MSG
 }
+

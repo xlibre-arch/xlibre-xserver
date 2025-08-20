@@ -1,224 +1,198 @@
-# Maintainer: artist for Xlibre
+# Maintainer:  Vitalii Kuzhdin <vitaliikuzhdin@gmail.com>
+# Maintainer:  artist for XLibre
 
-pkgbase=xlibre-xserver
-pkgname=($pkgbase $pkgbase-xephyr $pkgbase-xvfb $pkgbase-xnest $pkgbase-common $pkgbase-devel)
-pkgver=25.0.0.8
+pkgbase="xlibre-xserver"
+pkgname=("${pkgbase}"{,-bootstrap,-common,-devel,-xephyr,-xnest,-xvfb})
+pkgver=25.0.0.9
 pkgrel=1
-arch=('x86_64' 'aarch64')
-license=('LicenseRef-Adobe-Display-PostScript'
-         'BSD-3-Clause' 
-         'LicenseRef-DEC-3-Clause' 
-         'HPND'
-         'LicenseRef-HPND-sell-MIT-disclaimer-xserver'
-         'HPND-sell-variant' 
-         'ICU'
-         'ISC'
-         'MIT'
-         'MIT-open-group'
-         'NTP'
-         'SGI-B-2.0'
-         'SMLNJ'
-         'X11'
+arch=('aarch64' 'x86_64')
+url="https://github.com/x11libre/xserver"
+license=('LicenseRef-Adobe-Display-PostScript' 'BSD-3-Clause' 'LicenseRef-DEC-3-Clause' 
+         'HPND' 'LicenseRef-HPND-sell-MIT-disclaimer-xserver' 'HPND-sell-variant' 
+         'ICU' 'ISC' 'MIT' 'MIT-open-group' 'NTP' 'SGI-B-2.0' 'SMLNJ' 'X11'
          'X11-distribute-modifications-variant')
+makedepends=('libepoxy' 'libpciaccess' 'libunwind' 'libx11' 'libxaw' 'libxcvt'
+             'libxfont2' 'libxi' 'libxkbfile' 'libxmu' 'libxrender' 'libxres'
+             'libxshmfence>=1.1' 'libxtst' 'libxv' 'mesa' 'mesa-libgl'
+             'meson>=0.58' 'pixman>=0.27.2' 'systemd>=209' 'xcb-util'
+             'xcb-util-image' 'xcb-util-keysyms' 'xcb-util-renderutil'
+             'xcb-util-wm' 'xorg-font-util' 'xorg-util-macros' 'xorg-xkbcomp'
+             'xorgproto>=7.0.31' 'xtrans>=1.3.5')
 groups=('xlibre')
-url="https://github.com/X11Libre/xserver"
-makedepends=('xorgproto' 'pixman' 'libx11' 'mesa' 'mesa-libgl' 'xtrans'
-             'libxkbfile' 'libxfont2' 'libpciaccess' 'libxv' 'libxcvt'
-             'libxmu' 'libxrender' 'libxi' 'libxaw' 'libxtst' 'libxres'
-             'xorg-xkbcomp' 'xorg-util-macros' 'xorg-font-util' 'libepoxy'
-             'xcb-util' 'xcb-util-image' 'xcb-util-renderutil' 'xcb-util-wm'
-             'xcb-util-keysyms' 'libxshmfence' 'libunwind' 'meson')
-options=(!debug)
-source=("https://codeload.github.com/X11Libre/xserver/tar.gz/refs/tags/xlibre-xserver-${pkgver}"
-        xvfb-run # with updates from FC master
-        xvfb-run.1)
+options=('!emptydirs')
+_pkgsrc="xserver-xlibre-xserver-${pkgver}"
+source=("${_pkgsrc}.tar.gz::${url}/archive/refs/tags/xlibre-xserver-${pkgver}.tar.gz"
+        "xvfb-run"{,.1}) # with updates from FC master
+b2sums=('bfd0c185d2b0de83229bf06baadef4811397279f0c196ddc634244728ca96abd7e968669f50977cd6f4d14b58406d8bdba07dc0f7f3c2559491d300b826e4874'
+        '58c48ed893be841d14d3a09c9e1092a6da7bcb7fb773e1bf634c50a12e51ea3ad4aeba3843164a2834ee9f8ea95a7bca8b3ce8196a5328ce782724c082cb416f'
+        '0e3738e099ee2b958df3e5a5adbdfcbd1150ad64645fdae70d74b50123c3f3d43f9f95f5e4bac82bf5c72b3deb978655b8c3177d37de0bd0a2a6e0e343863511')
 
 build() {
-  if [[ ! "$CFLAGS" == *"-march="* ]]; then
-    case "$CARCH" in
-      "x86_64")
-        CFLAGS+=" -march=x86-64"
-        ;;
-      "aarch64")
-        CFLAGS+=" -march=armv8-a"
-        ;;
-      *)
-        CFLAGS+=" -march=native"
-        ;;
-    esac
-  fi
-  CFLAGS+=" -mtune=generic -O2 -pipe -fexceptions -Wp,-D_FORTIFY_SOURCE=3 -Wformat -Werror=format-security"
-  CFLAGS+=" -fstack-clash-protection -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer"
-  LDFLAGS=" -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,lazy -Wl,-z,relro -Wl,-z,pack-relative-relocs"
-  if [[ $CARCH == 'aarch64' ]]; then
-    CFLAGS=${CFLAGS/-fcf-protection}
-  fi
-  if [[ "$pkgname" == *"xf86-input"* ]]; then
-    CFLAGS+=" -fno-plt"
-    LDFLAGS+=" -Wl,-z,now"
-  else
-    CFLAGS=${CFLAGS/-fno-plt}
-  fi
-  if [[ "$pkgname" == *"xf86-video-intel"* ]]; then
-    CFLAGS=${CFLAGS/-flto*}
-    CFLAGS+=" -fno-lto"
-    LDFLAGS=${CFLAGS/-flto*}
-    LDFLAGS+=" -fno-lto"
-  fi
-  CXXFLAGS="${CFLAGS} -Wp,-D_GLIBCXX_ASSERTIONS"
-  export CFLAGS="${CFLAGS}"
-  export CXXFLAGS="${CXXFLAGS}"
-  export LDLAGS="${LDLAGS}"
-
-  meson xserver-${pkgbase}-${pkgver} build \
-    --prefix=/usr \
-    --libexecdir=lib \
-    --buildtype=release \
-    -D ipv6=true \
-    -D xvfb=true \
-    -D xnest=true \
-    -D xcsecurity=true \
-    -D xorg=true \
-    -D xephyr=true \
-    -D glamor=true \
-    -D int10=x86emu \
-    -D udev=true \
-    -D udev_kms=true \
-    -D dtrace=false \
-    -D systemd_logind=true \
-    -D suid_wrapper=true \
-    -D xkb_dir=/usr/share/X11/xkb \
-    -D xkb_output_dir=/var/lib/xkb \
+  # Since pacman 5.0.2-2, hardened flags are now enabled in makepkg.conf
+  # With them, modules fail to load with undefined symbol.
+  # See https://bugs.archlinux.org/task/55102 / https://bugs.archlinux.org/task/54845
+  export CFLAGS="${CFLAGS/-fno-plt}"
+  export CXXFLAGS="${CXXFLAGS/-fno-plt}"
+  export LDFLAGS="${LDFLAGS/-Wl,-z,now}"
+  local meson_options=(
+    "${_pkgsrc}"
+    "${_pkgsrc}/build"
+    -D ipv6=true
+    -D xvfb=true
+    -D xnest=true
+    -D xcsecurity=true
+    -D xorg=true
+    -D xephyr=true
+    -D glamor=true
+    -D udev=true
+    -D dtrace=false
+    -D systemd_logind=true
+    -D suid_wrapper=true
+    -D xkb_dir='/usr/share/X11/xkb'
+    -D xkb_output_dir='/var/lib/xkb'
     -D libunwind=true
+  )
 
-  # Print config
-  meson configure build
-  ninja -C build
-
-  # fake installation to be seperated into packages
-  DESTDIR="${srcdir}/fakeinstall" ninja -C build install
-}
-
-_install() {
-  local src f dir
-  for src; do
-    f="${src#fakeinstall/}"
-    dir="${pkgdir}/${f%/*}"
-    install -m755 -d "${dir}"
-    # use copy so a new file is created and fakeroot can track properties such as setuid
-    cp -av "${src}" "${dir}/"
-    rm -rf "${src}"
-  done
-}
-
-package_xlibre-xserver-common() {
-  pkgdesc="Official XLibre fork of X.Org Xorg server common files"
-  depends=(xkeyboard-config xorg-xkbcomp xorg-setxkbmap)
-  provides=('xorg-server-common')
-  conflicts=('xorg-server-common')
-
-  _install fakeinstall/usr/lib/xorg/protocol.txt
-  _install fakeinstall/usr/share/man/man1/Xserver.1
-
-  install -m644 -Dt "${pkgdir}/var/lib/xkb/" "xserver-${pkgbase}-${pkgver}"/xkb/README.compiled
-  # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" "xserver-${pkgbase}-${pkgver}"/COPYING
+  cd "${srcdir}"
+  arch-meson "${meson_options[@]}"
+  meson compile -C "${_pkgsrc}/build"
 }
 
 package_xlibre-xserver() {
-  pkgdesc="Official XLibre fork of X.Org X server"
-  depends=(xlibre-xserver-common xlibre-xf86-input-libinput libepoxy libxfont2 pixman libunwind
-           dbus libgl nettle libxdmcp sh glibc libxau libtirpc
-           libpciaccess libdrm libxshmfence libxcvt) # FS#52949
-  # see xorg-server-*/hw/xfree86/common/xf86Module.h for ABI versions - we provide major numbers that drivers can depend on
-  # and /usr/lib/pkgconfig/xorg-server.pc in xorg-server-devel pkg
-  provides=('xorg-server' 'X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server')
-  conflicts=('xorg-server' 'xorg-server-common<25.0.0.0' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting')
-  replaces=('glamor-egl' 'xf86-video-modesetting')
-  install=xlibre-xserver.install
+  pkgdesc="XLibre X server"
+  depends=('dbus' 'glibc' 'libdrm' 'libepoxy' 'libgl' 'libpciaccess' 'libtirpc'
+           'libunwind' 'libxau' 'libxcvt' 'libxdmcp' 'libxfont2'
+           'libxshmfence>=1.1' 'nettle' 'pixman>=0.27.2' 'sh'
+           'systemd-libs>=209' 'xlibre-input-libinput'
+           "${pkgbase}-common=${pkgver}-${pkgrel}") # FS#52949
+  # see xlibre-xserver*/hw/xfree86/common/xf86Module.h for ABI versions - we provide major numbers that drivers can depend on
+  # and /usr/lib/pkgconfig/xorg-server.pc in xlibre-xserver-devel pkg
+  provides=('X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'xorg-server')
+  conflicts=('xorg-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting' 'xlibre-server')
+  replaces=('xlibre-xserver-bootstrap') # 'glamor-egl' 'xf86-video-modesetting'
+  options=('emptydirs')
+  install="${pkgname}.install"
 
-  _install fakeinstall/usr/bin/{X,Xorg,gtf}
-  _install fakeinstall/usr/lib/Xorg{,.wrap}
-  _install fakeinstall/usr/lib/xorg/modules/*
-  _install fakeinstall/usr/share/X11/xorg.conf.d/10-quirks.conf
-  _install fakeinstall/usr/share/man/man1/{Xorg,Xorg.wrap,gtf}.1
-  _install fakeinstall/usr/share/man/man4/{exa,fbdevhw,inputtestdrv,modesetting}.4
-  _install fakeinstall/usr/share/man/man5/{Xwrapper.config,xorg.conf,xorg.conf.d}.5
+  cd "${srcdir}"
+  meson install -C "${_pkgsrc}/build" --destdir "${pkgdir}"
 
-  # distro specific files must be installed in /usr/share/X11/xorg.conf.d
-  install -m755 -d "${pkgdir}/etc/X11/xorg.conf.d"
+  cd "${pkgdir}"
+  install -vdm755 "etc/X11/xorg.conf.d"
 
-  # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" "xserver-${pkgbase}-${pkgver}"/COPYING
+  cd "usr"
+  # devel
+  rm -rf "include" "lib/pkgconfig" "share/aclocal"
+  # common
+  rm -f "lib/xorg/protocol.txt" "share/man/man1/Xserver.1"
+  # xephyr, xnest, xvfb
+  find . -type f,l \( -name '*Xephyr*' -o -name '*Xnest*' -o -name '*Xvfb*' \) -delete
 }
 
-package_xlibre-xserver-xephyr() {
-  pkgdesc="Official XLibre fork of X.Org nested X server that runs as an X application"
-  depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libgl libepoxy libunwind
-           xcb-util-image xcb-util-renderutil xcb-util-wm xcb-util-keysyms pixman
-           nettle libtirpc xcb-util libxdmcp libx11 libxau libxshmfence glibc)
-  provides=('xorg-server-xephyr')
-  conflicts=('xorg-server-xephyr')
+package_xlibre-xserver-bootstrap() {
+  pkgdesc="XLibre X server (bootstrap)"
+  depends=('dbus' 'glibc' 'libdrm' 'libepoxy' 'libgl' 'libpciaccess' 'libtirpc'
+           'libunwind' 'libxau' 'libxcvt' 'libxdmcp' 'libxfont2'
+           'libxshmfence>=1.1' 'nettle' 'pixman>=0.27.2' 'sh'
+           'systemd-libs>=209'
+           "${pkgbase}-common=${pkgver}-${pkgrel}") # FS#52949
+  # see xlibre-xserver*/hw/xfree86/common/xf86Module.h for ABI versions - we provide major numbers that drivers can depend on
+  # and /usr/lib/pkgconfig/xorg-server.pc in xlibre-xserver-devel pkg
+  provides=("${pkgbase}" 'X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server') # {xlibre,xorg}'-server'
+  conflicts=({xlibre,xorg}'-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting')
+  # replaces=('glamor-egl' 'xf86-video-modesetting')
+  options=('emptydirs')
+  install="${pkgname}.install"
 
-  _install fakeinstall/usr/bin/Xephyr
-  _install fakeinstall/usr/share/man/man1/Xephyr.1
+  cd "${srcdir}"
+  meson install -C "${_pkgsrc}/build" --destdir "${pkgdir}"
 
-  # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" "xserver-${pkgbase}-${pkgver}"/COPYING
+  cd "${pkgdir}"
+  install -vdm755 "etc/X11/xorg.conf.d"
+
+  cd "usr"
+  # devel
+  rm -rf "include" "lib/pkgconfig" "share/aclocal"
+  # common
+  rm -f "lib/xorg/protocol.txt" "share/man/man1/Xserver.1"
+  # xephyr, xnest, xvfb
+  find . -type f,l \( -name '*Xephyr*' -o -name '*Xnest*' -o -name '*Xvfb*' \) -delete
 }
 
-package_xlibre-xserver-xvfb() {
-  pkgdesc="Official XLibre fork of X.Org virtual framebuffer X server"
-  # xvfb-run is GPLv2, rest is MIT
-  license=('MIT' 'GPL-2.0-only')
-  depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind pixman xorg-xauth 
-           libgl nettle libtirpc libxdmcp sh glibc libxau)
-  provides=('xorg-server-xvfb')
-  conflicts=('xorg-server-xvfb')
+package_xlibre-xserver-common() {
+  pkgdesc="XLibre server common files"
+  arch=('any')
+  depends=('xkeyboard-config' 'xorg-setxkbmap' 'xorg-xkbcomp')
+  provides=('xorg-server-common')
+  conflicts=('xorg-server-common' 'xlibre-server-common')
 
-  _install fakeinstall/usr/bin/Xvfb
-  _install fakeinstall/usr/share/man/man1/Xvfb.1
+  cd "${srcdir}"
+  meson install -C "${_pkgsrc}/build" --destdir "${pkgdir}"
 
-  install -m755 "${srcdir}/xvfb-run" "${pkgdir}/usr/bin/"
-  install -m644 "${srcdir}/xvfb-run.1" "${pkgdir}/usr/share/man/man1/" # outda
+  find "${pkgdir}" -type f,l ! \( -name 'protocol.txt' -o -name 'Xserver.1' \) -delete
 
-  # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" "xserver-${pkgbase}-${pkgver}"/COPYING
-}
-
-package_xlibre-xserver-xnest() {
-  pkgdesc="Official XLibre fork of X.Org nested X server that runs as an X application"
-  depends=(xlibre-xserver-common 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind libxext pixman nettle
-           libtirpc libxdmcp glibc libx11 libxau)
-  provides=('xorg-server-xnest')
-  conflicts=('xorg-server-xnest')
-
-  _install fakeinstall/usr/bin/Xnest
-  _install fakeinstall/usr/share/man/man1/Xnest.1
-
-  # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" "xserver-${pkgbase}-${pkgver}"/COPYING
+  cd "${_pkgsrc}"
+  install -vDm644 "COPYING" "${pkgdir}/usr/share/licenses/${pkgbase}/COPYING"
+  install -vDm644 "xkb/README.compiled" "${pkgdir}/var/lib/xkb/README.compiled"
 }
 
 package_xlibre-xserver-devel() {
-  pkgdesc="Official XLibre fork of X.Org development files for the X.Org X server"
-  depends=('xorgproto' 'mesa' 'libpciaccess' 'pixman'
-           # not technically required but almost every Xorg pkg needs it to build
-           'xorg-util-macros')
+  pkgdesc="Development files for the XLibre X server"
+  arch=('any')
+  depends=('libpciaccess' 'mesa' 'pixman>=0.27.2' 'xorgproto>=7.0.31'
+           'xorg-util-macros') # not technically required but almost every Xorg pkg needs it to build
   provides=('xorg-server-devel')
-  conflicts=('xorg-server-devel')
+  conflicts=('xorg-server-devel' 'xlibre-server-devel')
 
-  _install fakeinstall/usr/include/xorg/*
-  _install fakeinstall/usr/lib/pkgconfig/xorg-server.pc
-  _install fakeinstall/usr/share/aclocal/xorg-server.m4
+  cd "${srcdir}"
+  meson install -C "${_pkgsrc}/build" --destdir "${pkgdir}"
 
-  # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" "xserver-${pkgbase}-${pkgver}"/COPYING
-
-  # make sure there are no files left to install
-  find fakeinstall -depth -print0 | xargs -0 rmdir
+  find "${pkgdir}" -type f,l ! \( -name '*.h' -o -name '*.pc' -o -name '*.m4' \) -delete
 }
-sha256sums=('9be47f55fb1258addc38b24a48322647c65e8e38f78402e1425f8282e7073483'
-            '27ce50f4432e5549e662db857118761fa9cd74c6900aac52c4db768c956838db'
-            '2460adccd3362fefd4cdc5f1c70f332d7b578091fb9167bf88b5f91265bbd776')
 
+package_xlibre-xserver-xephyr() {
+  pkgdesc="A nested XLibre server that runs as an X application"
+  depends=('glibc' 'libepoxy' 'libgl' 'libtirpc' 'libunwind' 'libx11' 'libxau'
+           'libxdmcp' 'libxfont2' 'libxshmfence' 'nettle' 'pixman>=0.27.2'
+           'systemd-libs>=209' 'xcb-util' 'xcb-util-image' 'xcb-util-keysyms'
+           'xcb-util-renderutil' 'xcb-util-wm'
+           "${pkgbase}-common=${pkgver}-${pkgrel}")
+  provides=('xorg-server-xephyr')
+  conflicts=('xorg-server-xephyr' 'xlibre-server-xephyr')
+
+  cd "${srcdir}"
+  meson install -C "${_pkgsrc}/build" --destdir "${pkgdir}"
+
+  find "${pkgdir}" -type f,l ! -name '*Xephyr*' -delete
+}
+
+package_xlibre-xserver-xnest() {
+  pkgdesc="A nested XLibre server that runs as an X application"
+  depends=('glibc' 'libtirpc' 'libunwind' 'libx11' 'libxau' 'libxdmcp'
+           'libxext' 'libxfont2' 'nettle' 'pixman>=0.27.2'
+           'systemd-libs>=209' "${pkgbase}-common=${pkgver}-${pkgrel}")
+  provides=('xorg-server-xnest')
+  conflicts=('xorg-server-xnest' 'xlibre-server-xnest')
+
+  cd "${srcdir}"
+  meson install -C "${_pkgsrc}/build" --destdir "${pkgdir}"
+
+  find "${pkgdir}" -type f,l ! -name '*Xnest*' -delete
+}
+
+package_xlibre-xserver-xvfb() {
+  pkgdesc="Virtual framebuffer XLibre server"
+  license=('MIT' 'GPL-2.0-only')
+  depends=('glibc' 'libgl' 'libtirpc' 'libunwind' 'libxau' 'libxdmcp'
+           'libxfont2' 'nettle' 'pixman' 'sh' 'systemd-libs>=209'
+           "${pkgbase}-common=${pkgver}-${pkgrel}" 'xorg-xauth')
+  provides=('xorg-server-xvfb')
+  conflicts=('xorg-server-xvfb' 'xlibre-server-xvfb')
+
+  cd "${srcdir}"
+  meson install -C "${_pkgsrc}/build" --destdir "${pkgdir}"
+
+  find "${pkgdir}" -type f,l ! -name '*Xvfb*' -delete
+
+  install -vDm755 "xvfb-run"   "${pkgdir}/usr/bin/xvfb-run"
+  install -vDm644 "xvfb-run.1" "${pkgdir}/usr/share/man/man1/xvfb-run.1" # outda
+}
