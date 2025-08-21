@@ -67,7 +67,7 @@ package_xlibre-xserver() {
            "${pkgbase}-common=${pkgver}-${pkgrel}") # FS#52949
   # see xlibre-xserver*/hw/xfree86/common/xf86Module.h for ABI versions - we provide major numbers that drivers can depend on
   # and /usr/lib/pkgconfig/xorg-server.pc in xlibre-xserver-devel pkg
-  provides=('X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'xorg-server')
+  provides=('X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'xorg-server' xlibre-server)
   conflicts=('xorg-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting' 'xlibre-server')
   replaces=('xlibre-xserver-bootstrap' 'glamor-egl' 'xf86-video-modesetting')
   options=('emptydirs')
@@ -122,7 +122,7 @@ package_xlibre-xserver-common() {
   pkgdesc="XLibre server common files"
   arch=('any')
   depends=('xkeyboard-config' 'xorg-setxkbmap' 'xorg-xkbcomp')
-  provides=('xorg-server-common')
+  provides=('xorg-server-common' 'xlibre-server-common')
   conflicts=('xorg-server-common' 'xlibre-server-common')
 
   cd "${srcdir}"
@@ -140,7 +140,7 @@ package_xlibre-xserver-devel() {
   arch=('any')
   depends=('libpciaccess' 'mesa' 'pixman>=0.27.2' 'xorgproto>=7.0.31'
            'xorg-util-macros') # not technically required but almost every Xorg pkg needs it to build
-  provides=('xorg-server-devel')
+  provides=('xorg-server-devel' 'xlibre-server-devel')
   conflicts=('xorg-server-devel' 'xlibre-server-devel')
 
   cd "${srcdir}"
@@ -156,7 +156,7 @@ package_xlibre-xserver-xephyr() {
            'systemd-libs>=209' 'xcb-util' 'xcb-util-image' 'xcb-util-keysyms'
            'xcb-util-renderutil' 'xcb-util-wm'
            "${pkgbase}-common=${pkgver}-${pkgrel}")
-  provides=('xorg-server-xephyr')
+  provides=('xorg-server-xephyr' 'xlibre-server-xephyr')
   conflicts=('xorg-server-xephyr' 'xlibre-server-xephyr')
 
   cd "${srcdir}"
@@ -170,7 +170,7 @@ package_xlibre-xserver-xnest() {
   depends=('glibc' 'libtirpc' 'libunwind' 'libx11' 'libxau' 'libxdmcp'
            'libxext' 'libxfont2' 'nettle' 'pixman>=0.27.2'
            'systemd-libs>=209' "${pkgbase}-common=${pkgver}-${pkgrel}")
-  provides=('xorg-server-xnest')
+  provides=('xorg-server-xnest' 'xlibre-server-xnest')
   conflicts=('xorg-server-xnest' 'xlibre-server-xnest')
 
   cd "${srcdir}"
@@ -185,7 +185,7 @@ package_xlibre-xserver-xvfb() {
   depends=('glibc' 'libgl' 'libtirpc' 'libunwind' 'libxau' 'libxdmcp'
            'libxfont2' 'nettle' 'pixman' 'sh' 'systemd-libs>=209'
            "${pkgbase}-common=${pkgver}-${pkgrel}" 'xorg-xauth')
-  provides=('xorg-server-xvfb')
+  provides=('xorg-server-xvfb' 'xlibre-server-xvfb')
   conflicts=('xorg-server-xvfb' 'xlibre-server-xvfb')
 
   cd "${srcdir}"

@@ -85,6 +85,7 @@ pkgname = xlibre-xserver
 	provides = X-ABI-EXTENSION_VERSION=11.0
 	provides = x-server
 	provides = xorg-server
+	provides = xlibre-server
 	conflicts = xorg-server
 	conflicts = nvidia-utils<=331.20
 	conflicts = glamor-egl
@@ -135,6 +136,7 @@ pkgname = xlibre-xserver-common
 	depends = xorg-setxkbmap
 	depends = xorg-xkbcomp
 	provides = xorg-server-common
+	provides = xlibre-server-common
 	conflicts = xorg-server-common
 	conflicts = xlibre-server-common
 
@@ -147,6 +149,7 @@ pkgname = xlibre-xserver-devel
 	depends = xorgproto>=7.0.31
 	depends = xorg-util-macros
 	provides = xorg-server-devel
+	provides = xlibre-server-devel
 	conflicts = xorg-server-devel
 	conflicts = xlibre-server-devel
 
@@ -172,6 +175,7 @@ pkgname = xlibre-xserver-xephyr
 	depends = xcb-util-wm
 	depends = xlibre-xserver-common=25.0.0.9-1
 	provides = xorg-server-xephyr
+	provides = xlibre-server-xephyr
 	conflicts = xorg-server-xephyr
 	conflicts = xlibre-server-xephyr
 
@@ -190,6 +194,7 @@ pkgname = xlibre-xserver-xnest
 	depends = systemd-libs>=209
 	depends = xlibre-xserver-common=25.0.0.9-1
 	provides = xorg-server-xnest
+	provides = xlibre-server-xnest
 	conflicts = xorg-server-xnest
 	conflicts = xlibre-server-xnest
 
@@ -211,5 +216,6 @@ pkgname = xlibre-xserver-xvfb
 	depends = xlibre-xserver-common=25.0.0.9-1
 	depends = xorg-xauth
 	provides = xorg-server-xvfb
+	provides = xlibre-server-xvfb
 	conflicts = xorg-server-xvfb
 	conflicts = xlibre-server-xvfb
