@@ -63,7 +63,7 @@ package_xlibre-xserver() {
   depends=('dbus' 'glibc' 'libdrm' 'libepoxy' 'libgl' 'libpciaccess' 'libtirpc'
            'libunwind' 'libxau' 'libxcvt' 'libxdmcp' 'libxfont2'
            'libxshmfence>=1.1' 'nettle' 'pixman>=0.27.2' 'sh'
-           'systemd-libs>=209' 'xlibre-input-libinput'
+           'systemd-libs>=209' 'xlibre-xserver-common' 'xlibre-input-libinput'
            "${pkgbase}-common=${pkgver}-${pkgrel}") # FS#52949
   # see xlibre-xserver*/hw/xfree86/common/xf86Module.h for ABI versions - we provide major numbers that drivers can depend on
   # and /usr/lib/pkgconfig/xorg-server.pc in xlibre-xserver-devel pkg

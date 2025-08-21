@@ -78,6 +78,7 @@ pkgname = xlibre-xserver
 	depends = pixman>=0.27.2
 	depends = sh
 	depends = systemd-libs>=209
+	depends = xlibre-xserver-common
 	depends = xlibre-input-libinput
 	depends = xlibre-xserver-common=25.0.0.9-1
 	provides = X-ABI-VIDEODRV_VERSION=28.0
