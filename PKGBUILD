@@ -97,7 +97,7 @@ package_xlibre-xserver-bootstrap() {
            "${pkgbase}-common=${pkgver}-${pkgrel}") # FS#52949
   # see xlibre-xserver*/hw/xfree86/common/xf86Module.h for ABI versions - we provide major numbers that drivers can depend on
   # and /usr/lib/pkgconfig/xorg-server.pc in xlibre-xserver-devel pkg
-  provides=("${pkgbase}" 'X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server') # {xlibre,xorg}'-server'
+  provides=("${pkgbase}" 'X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'xorg-server') # xlibre'-server'
   conflicts=({xlibre,xorg}'-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting')
   # replaces=('glamor-egl' 'xf86-video-modesetting')
   options=('emptydirs')

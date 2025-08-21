@@ -122,6 +122,7 @@ pkgname = xlibre-xserver-bootstrap
 	provides = X-ABI-XINPUT_VERSION=26.0
 	provides = X-ABI-EXTENSION_VERSION=11.0
 	provides = x-server
+	provides = xorg-server
 	conflicts = xlibre-server
 	conflicts = xorg-server
 	conflicts = nvidia-utils<=331.20
