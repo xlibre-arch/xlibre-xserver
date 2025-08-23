@@ -4,7 +4,7 @@
 pkgbase="xlibre-xserver"
 pkgname=("${pkgbase}"{,-bootstrap,-common,-devel,-xephyr,-xnest,-xvfb})
 pkgver=25.0.0.9
-pkgrel=1
+pkgrel=2
 arch=('aarch64' 'x86_64')
 url="https://github.com/x11libre/xserver"
 license=('LicenseRef-Adobe-Display-PostScript' 'BSD-3-Clause' 'LicenseRef-DEC-3-Clause' 
@@ -91,7 +91,7 @@ package_xlibre-xserver() {
 package_xlibre-xserver-bootstrap() {
   pkgdesc="XLibre X server (bootstrap)"
   depends=('dbus' 'glibc' 'libdrm' 'libepoxy' 'libgl' 'libpciaccess' 'libtirpc'
-           'libunwind' 'libxau' 'libxcvt' 'libxdmcp' 'libxfont2'
+           'libunwind' 'libxau' 'libxcvt' 'libxdmcp' 'libxfont2' 'libmd'
            'libxshmfence>=1.1' 'nettle' 'pixman>=0.27.2' 'sh'
            'systemd-libs>=209'
            "${pkgbase}-common=${pkgver}-${pkgrel}") # FS#52949

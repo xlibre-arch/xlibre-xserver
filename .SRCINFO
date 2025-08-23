@@ -1,6 +1,6 @@
 pkgbase = xlibre-xserver
 	pkgver = 25.0.0.9
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/x11libre/xserver
 	arch = aarch64
 	arch = x86_64
@@ -80,7 +80,7 @@ pkgname = xlibre-xserver
 	depends = systemd-libs>=209
 	depends = xlibre-xserver-common
 	depends = xlibre-input-libinput
-	depends = xlibre-xserver-common=25.0.0.9-1
+	depends = xlibre-xserver-common=25.0.0.9-2
 	provides = X-ABI-VIDEODRV_VERSION=28.0
 	provides = X-ABI-XINPUT_VERSION=26.0
 	provides = X-ABI-EXTENSION_VERSION=11.0
@@ -112,12 +112,13 @@ pkgname = xlibre-xserver-bootstrap
 	depends = libxcvt
 	depends = libxdmcp
 	depends = libxfont2
+	depends = libmd
 	depends = libxshmfence>=1.1
 	depends = nettle
 	depends = pixman>=0.27.2
 	depends = sh
 	depends = systemd-libs>=209
-	depends = xlibre-xserver-common=25.0.0.9-1
+	depends = xlibre-xserver-common=25.0.0.9-2
 	provides = xlibre-xserver
 	provides = X-ABI-VIDEODRV_VERSION=28.0
 	provides = X-ABI-XINPUT_VERSION=26.0
@@ -175,7 +176,7 @@ pkgname = xlibre-xserver-xephyr
 	depends = xcb-util-keysyms
 	depends = xcb-util-renderutil
 	depends = xcb-util-wm
-	depends = xlibre-xserver-common=25.0.0.9-1
+	depends = xlibre-xserver-common=25.0.0.9-2
 	provides = xorg-server-xephyr
 	provides = xlibre-server-xephyr
 	conflicts = xorg-server-xephyr
@@ -194,7 +195,7 @@ pkgname = xlibre-xserver-xnest
 	depends = nettle
 	depends = pixman>=0.27.2
 	depends = systemd-libs>=209
-	depends = xlibre-xserver-common=25.0.0.9-1
+	depends = xlibre-xserver-common=25.0.0.9-2
 	provides = xorg-server-xnest
 	provides = xlibre-server-xnest
 	conflicts = xorg-server-xnest
@@ -215,7 +216,7 @@ pkgname = xlibre-xserver-xvfb
 	depends = pixman
 	depends = sh
 	depends = systemd-libs>=209
-	depends = xlibre-xserver-common=25.0.0.9-1
+	depends = xlibre-xserver-common=25.0.0.9-2
 	depends = xorg-xauth
 	provides = xorg-server-xvfb
 	provides = xlibre-server-xvfb
