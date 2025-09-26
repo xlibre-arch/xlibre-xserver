@@ -3,7 +3,7 @@
 
 pkgbase="xlibre-xserver"
 pkgname=("${pkgbase}"{,-bootstrap,-common,-devel,-xephyr,-xnest,-xvfb})
-pkgver=25.0.0.11
+pkgver=25.0.0.12
 pkgrel=1
 arch=('aarch64' 'x86_64')
 url="https://github.com/x11libre/xserver"
@@ -23,7 +23,7 @@ options=('!emptydirs')
 _pkgsrc="xserver-xlibre-xserver-${pkgver}"
 source=("${_pkgsrc}.tar.gz::${url}/archive/refs/tags/xlibre-xserver-${pkgver}.tar.gz"
         "xvfb-run"{,.1}) # with updates from FC master
-b2sums=('f235bb796f2dfb11d77fd5fa0cdc68d06098cef8065fa0feef75aea498896392542a5ffe2174c3231db65064662eeb64ad43cdda21bd033b26bd3a82e8d2469a'
+b2sums=('d6e7a36b868ce83fa49b4bae9d4a4136bef6e0769680e5590aeaad979c2fc39685c481f64c4f527dc9c796ff4f1d62156ccddd6738d1f9cef9a7a0fc01f191fa'
         '58c48ed893be841d14d3a09c9e1092a6da7bcb7fb773e1bf634c50a12e51ea3ad4aeba3843164a2834ee9f8ea95a7bca8b3ce8196a5328ce782724c082cb416f'
         '0e3738e099ee2b958df3e5a5adbdfcbd1150ad64645fdae70d74b50123c3f3d43f9f95f5e4bac82bf5c72b3deb978655b8c3177d37de0bd0a2a6e0e343863511')
 
@@ -61,7 +61,7 @@ build() {
 package_xlibre-xserver() {
   pkgdesc="XLibre X server"
   depends=('dbus' 'glibc' 'libdrm' 'libepoxy' 'libgl' 'libpciaccess' 'libtirpc'
-           'libunwind' 'libxau' 'libxcvt' 'libxdmcp' 'libxfont2'
+           'libunwind' 'libxau' 'libxcvt' 'libxdmcp' 'libxfont2' 'libbsd'
            'libxshmfence>=1.1' 'nettle' 'pixman>=0.27.2' 'sh'
            'systemd-libs>=209' 'xlibre-xserver-common' 'xlibre-input-libinput'
            "${pkgbase}-common=${pkgver}-${pkgrel}") # FS#52949
