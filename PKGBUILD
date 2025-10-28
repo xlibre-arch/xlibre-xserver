@@ -1,9 +1,9 @@
-# Maintainer:  Vitalii Kuzhdin <vitaliikuzhdin@gmail.com>
-# Maintainer:  artist for XLibre
+# Maintainer: artist for XLibre
+# Maintainer: Vitalii Kuzhdin <vitaliikuzhdin@gmail.com>
 
 pkgbase="xlibre-xserver"
 pkgname=("${pkgbase}"{,-bootstrap,-common,-devel,-xephyr,-xnest,-xvfb})
-pkgver=25.0.0.12
+pkgver=25.0.0.13
 pkgrel=1
 arch=('aarch64' 'x86_64')
 url="https://github.com/x11libre/xserver"
@@ -23,7 +23,7 @@ options=('!emptydirs')
 _pkgsrc="xserver-xlibre-xserver-${pkgver}"
 source=("${_pkgsrc}.tar.gz::${url}/archive/refs/tags/xlibre-xserver-${pkgver}.tar.gz"
         "xvfb-run"{,.1}) # with updates from FC master
-b2sums=('d6e7a36b868ce83fa49b4bae9d4a4136bef6e0769680e5590aeaad979c2fc39685c481f64c4f527dc9c796ff4f1d62156ccddd6738d1f9cef9a7a0fc01f191fa'
+b2sums=('3adb5d7063fbf52bc342308217fd7eeef8d71dc7737706c00c08c7ed360c58151bd036ff5ac3639504ff29c2112fe53a0aff2b936663c0b9ea57dff4fc33a480'
         '58c48ed893be841d14d3a09c9e1092a6da7bcb7fb773e1bf634c50a12e51ea3ad4aeba3843164a2834ee9f8ea95a7bca8b3ce8196a5328ce782724c082cb416f'
         '0e3738e099ee2b958df3e5a5adbdfcbd1150ad64645fdae70d74b50123c3f3d43f9f95f5e4bac82bf5c72b3deb978655b8c3177d37de0bd0a2a6e0e343863511')
 
