@@ -1,7 +1,8 @@
 # Maintainer: artist for XLibre
 
-pkgbase=xlibre-xserver
-pkgname=($pkgbase-beta $pkgbase-xephyr-beta $pkgbase-xvfb-beta $pkgbase-xnest-beta $pkgbase-common-beta $pkgbase-devel-beta)
+pkgbase=xlibre-xserver-beta
+_pkgbase="${pkgbase%-*}"
+pkgname=($_pkgbase-beta $_pkgbase-xephyr-beta $_pkgbase-xvfb-beta $_pkgbase-xnest-beta $_pkgbase-common-beta $_pkgbase-devel-beta)
 pkgver=25.1.3
 pkgrel=1
 arch=('x86_64')
@@ -22,14 +23,14 @@ license=('LicenseRef-Adobe-Display-PostScript'
          'X11-distribute-modifications-variant')
 groups=('xlibre')
 url="https://github.com/X11Libre/xserver"
-makedepends=('xorgproto' 'pixman' 'libx11' 'mesa' 'mesa-libgl'
+makedepends=('xlibre-xserver' 'xorgproto' 'pixman' 'libx11' 'mesa' 'mesa-libgl'
              'libxkbfile' 'libxfont2' 'libpciaccess' 'libxv' 'libxcvt'
              'libxmu' 'libxrender' 'libxi' 'libxaw' 'libxtst' 'libxres'
              'xorg-xkbcomp' 'xorg-util-macros' 'xorg-font-util' 'libepoxy'
              'xcb-util' 'xcb-util-image' 'xcb-util-renderutil' 'xcb-util-wm' 'xcb-util-keysyms'
              'libxshmfence' 'libunwind' 'meson' 'dbus')
 options=('!debug')
-source=("${url}/archive/refs/tags/${pkgbase}-${pkgver}.tar.gz"
+source=("${url}/archive/refs/tags/${_pkgbase}-${pkgver}.tar.gz"
         xvfb-run # with updates from FC master
         xvfb-run.1)
 
@@ -38,7 +39,7 @@ build() {
   export CXXFLAGS=${CXXFLAGS/-fno-plt}
   export LDFLAGS=${LDFLAGS/-Wl,-z,now}
 
-  arch-meson xserver-${pkgbase}-${pkgver} build \
+  arch-meson xserver-${_pkgbase}-${pkgver} build \
     --buildtype=release \
     -D ipv6=true \
     -D xvfb=true \
@@ -81,15 +82,15 @@ _install() {
 package_xlibre-xserver-common-beta() {
   pkgdesc="XLibre fork of X.Org Xorg server common files"
   depends=(xkeyboard-config xorg-xkbcomp xorg-setxkbmap)
-  provides=('xorg-server-common')
-  conflicts=('xorg-server-common' "xorg-server<$pkgver")
+  provides=('xlibre-xserver-common' 'xorg-server-common')
+  conflicts=('xlibre-xserver-common' 'xorg-server-common' "xorg-server<$pkgver")
 
   _install fakeinstall/usr/lib/xorg/protocol.txt
   _install fakeinstall/usr/share/man/man1/Xserver.1
 
-  install -m644 -Dt "${pkgdir}/var/lib/xkb/" xserver-${pkgbase}-${pkgver}/xkb/README.compiled
+  install -m644 -Dt "${pkgdir}/var/lib/xkb/" xserver-${_pkgbase}-${pkgver}/xkb/README.compiled
   # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${pkgbase}-${pkgver}/COPYING
+  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${_pkgbase}-${pkgver}/COPYING
 }
 
 package_xlibre-xserver-beta() {
@@ -98,8 +99,8 @@ package_xlibre-xserver-beta() {
            dbus libgl nettle libxdmcp sh glibc libxau libtirpc libbsd seatd
            libpciaccess libdrm libxshmfence libxcvt) # FS#52949
   provides=('xorg-server' 'X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'x11win-server')
-  conflicts=('xorg-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting')
-  replaces=('glamor-egl' 'xf86-video-modesetting')
+  conflicts=('xlibre-xserver' 'xorg-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting')
+  replaces=('xlibre-xserver' 'glamor-egl' 'xf86-video-modesetting')
 
   _install fakeinstall/usr/bin/{X,Xorg,gtf,Xfbdev}
   _install fakeinstall/usr/lib/Xorg{,.wrap}
@@ -113,7 +114,7 @@ package_xlibre-xserver-beta() {
   install -m755 -d "${pkgdir}/etc/X11/xorg.conf.d"
 
   # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${pkgbase}-${pkgver}/COPYING
+  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${_pkgbase}-${pkgver}/COPYING
 }
 
 package_xlibre-xserver-xephyr-beta() {
@@ -121,14 +122,14 @@ package_xlibre-xserver-xephyr-beta() {
   depends=(xlibre-xserver-common-beta 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libgl libepoxy libunwind
            xcb-util-image xcb-util-renderutil xcb-util-wm xcb-util-keysyms pixman
            nettle libtirpc xcb-util libxdmcp libx11 libxau libxshmfence glibc seatd)
-  provides=('xorg-server-xephyr')
-  conflicts=('xorg-server-xephyr')
+  provides=('xlibre-xserver-xephyr' 'xorg-server-xephyr')
+  conflicts=('xlibre-xserver-xephyr' 'xorg-server-xephyr')
 
   _install fakeinstall/usr/bin/Xephyr
   _install fakeinstall/usr/share/man/man1/Xephyr.1
 
   # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${pkgbase}-${pkgver}/COPYING
+  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${_pkgbase}-${pkgver}/COPYING
 }
 
 package_xlibre-xserver-xvfb-beta() {
@@ -138,8 +139,8 @@ package_xlibre-xserver-xvfb-beta() {
   depends=(xlibre-xserver-common-beta 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind pixman xorg-xauth 
            libgl nettle libtirpc seatd
            libxdmcp sh glibc libxau)
-  provides=('xorg-server-xvfb')
-  conflicts=('xorg-server-xvfb')
+  provides=('xlibre-xserver-xvfb' 'xorg-server-xvfb')
+  conflicts=('xlibre-xserver-xvfb' 'xorg-server-xvfb')
 
   _install fakeinstall/usr/bin/Xvfb
   _install fakeinstall/usr/share/man/man1/Xvfb.1
@@ -148,7 +149,7 @@ package_xlibre-xserver-xvfb-beta() {
   install -m644 "${srcdir}/xvfb-run.1" "${pkgdir}/usr/share/man/man1/"
 
   # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${pkgbase}-${pkgver}/COPYING
+  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${_pkgbase}-${pkgver}/COPYING
 }
 
 package_xlibre-xserver-xnest-beta() {
@@ -156,14 +157,14 @@ package_xlibre-xserver-xnest-beta() {
   depends=(xlibre-xserver-common-beta 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind libxext pixman nettle
            libtirpc seatd
            libxdmcp glibc libx11 libxau)
-  provides=('xorg-server-xnest')
-  conflicts=('xorg-server-xnest')
+  provides=('xlibre-xserver-xnest' 'xorg-server-xnest')
+  conflicts=('xlibre-xserver-xnest' 'xorg-server-xnest')
 
   _install fakeinstall/usr/bin/Xnest
   _install fakeinstall/usr/share/man/man1/Xnest.1
 
   # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${pkgbase}-${pkgver}/COPYING
+  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${_pkgbase}-${pkgver}/COPYING
 }
 
 package_xlibre-xserver-devel-beta() {
@@ -171,8 +172,8 @@ package_xlibre-xserver-devel-beta() {
   depends=('xlibre-xserver-beta' 'X-ABI-XINPUT_VERSION=26.0' 'xorgproto' 'mesa' 'libpciaccess' 'pixman'
            # not technically required but almost every Xorg pkg needs it to build
            'xorg-util-macros')
-  provides=('xorg-server-devel')
-  conflicts=('xorg-server-devel')
+  provides=('xlibre-xserver-devel' 'xorg-server-devel')
+  conflicts=('xlibre-xserver-devel' 'xorg-server-devel')
 
   _install fakeinstall/usr/include/xorg/*
   _install fakeinstall/usr/lib/pkgconfig/xorg-server.pc
@@ -180,7 +181,7 @@ package_xlibre-xserver-devel-beta() {
   _install fakeinstall/usr/share/aclocal/xorg-server.m4
 
   # license
-  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${pkgbase}-${pkgver}/COPYING
+  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" xserver-${_pkgbase}-${pkgver}/COPYING
 
   # make sure there are no files left to install
   find fakeinstall -depth -print0 | xargs -0 rmdir
