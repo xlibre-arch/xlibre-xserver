@@ -4,7 +4,7 @@ pkgbase=xlibre-xserver-beta
 _pkgbase="${pkgbase%-*}"
 pkgname=($_pkgbase-beta $_pkgbase-xephyr-beta $_pkgbase-xvfb-beta $_pkgbase-xnest-beta $_pkgbase-common-beta $_pkgbase-devel-beta)
 pkgver=25.1.5
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 license=('LicenseRef-Adobe-Display-PostScript'
          'BSD-3-Clause' 
@@ -96,7 +96,7 @@ package_xlibre-xserver-common-beta() {
 package_xlibre-xserver-beta() {
   pkgdesc="XLibre fork of X.Org X server"
   depends=(xlibre-xserver-common-beta xlibre-input-libinput libepoxy libxfont2 pixman libunwind
-           dbus libgl nettle libxdmcp sh glibc libxau libtirpc libbsd seatd
+           dbus libgl nettle libxdmcp sh glibc libxau libtirpc libbsd
            libpciaccess libdrm libxshmfence libxcvt) # FS#52949
   provides=('xorg-server' 'X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'x11win-server')
   conflicts=('xlibre-xserver' 'xorg-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting')
@@ -121,7 +121,7 @@ package_xlibre-xserver-xephyr-beta() {
   pkgdesc="XLibre fork of X.Org nested X server that runs as an X application"
   depends=(xlibre-xserver-common-beta 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libgl libepoxy libunwind
            xcb-util-image xcb-util-renderutil xcb-util-wm xcb-util-keysyms pixman
-           nettle libtirpc xcb-util libxdmcp libx11 libxau libxshmfence glibc seatd)
+           nettle libtirpc xcb-util libxdmcp libx11 libxau libxshmfence glibc)
   provides=('xlibre-xserver-xephyr' 'xorg-server-xephyr')
   conflicts=('xlibre-xserver-xephyr' 'xorg-server-xephyr')
 
@@ -137,7 +137,7 @@ package_xlibre-xserver-xvfb-beta() {
   # xvfb-run is GPLv2, rest is MIT
   license=('MIT' 'GPL-2.0-only')
   depends=(xlibre-xserver-common-beta 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind pixman xorg-xauth 
-           libgl nettle libtirpc seatd
+           libgl nettle libtirpc
            libxdmcp sh glibc libxau)
   provides=('xlibre-xserver-xvfb' 'xorg-server-xvfb')
   conflicts=('xlibre-xserver-xvfb' 'xorg-server-xvfb')
@@ -155,7 +155,7 @@ package_xlibre-xserver-xvfb-beta() {
 package_xlibre-xserver-xnest-beta() {
   pkgdesc="XLibre fork of X.Org nested X server that runs as an X application"
   depends=(xlibre-xserver-common-beta 'X-ABI-XINPUT_VERSION=26.0' libxfont2 libunwind libxext pixman nettle
-           libtirpc seatd
+           libtirpc
            libxdmcp glibc libx11 libxau)
   provides=('xlibre-xserver-xnest' 'xorg-server-xnest')
   conflicts=('xlibre-xserver-xnest' 'xorg-server-xnest')
