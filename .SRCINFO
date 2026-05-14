@@ -1,6 +1,6 @@
 pkgbase = xlibre-xserver-beta
 	pkgver = 25.1.5
-	pkgrel = 2
+	pkgrel = 3
 	url = https://github.com/X11Libre/xserver
 	arch = x86_64
 	groups = xlibre
@@ -79,6 +79,7 @@ pkgname = xlibre-xserver-beta
 	depends = libxshmfence
 	depends = libxcvt
 	provides = xorg-server
+	provides = xlibre-xserver=25.1
 	provides = X-ABI-VIDEODRV_VERSION=28.0
 	provides = X-ABI-XINPUT_VERSION=26.0
 	provides = X-ABI-EXTENSION_VERSION=11.0
@@ -166,6 +167,7 @@ pkgname = xlibre-xserver-common-beta
 	depends = xorg-xkbcomp
 	depends = xorg-setxkbmap
 	provides = xlibre-xserver-common
+	provides = xlibre-xserver-common=25.1
 	provides = xorg-server-common
 	conflicts = xlibre-xserver-common
 	conflicts = xorg-server-common
@@ -181,6 +183,7 @@ pkgname = xlibre-xserver-devel-beta
 	depends = pixman
 	depends = xorg-util-macros
 	provides = xlibre-xserver-devel
+	provides = xlibre-xserver-devel=25.1
 	provides = xorg-server-devel
 	conflicts = xlibre-xserver-devel
 	conflicts = xorg-server-devel

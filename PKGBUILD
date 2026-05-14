@@ -4,7 +4,7 @@ pkgbase=xlibre-xserver-beta
 _pkgbase="${pkgbase%-*}"
 pkgname=($_pkgbase-beta $_pkgbase-xephyr-beta $_pkgbase-xvfb-beta $_pkgbase-xnest-beta $_pkgbase-common-beta $_pkgbase-devel-beta)
 pkgver=25.1.5
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 license=('LicenseRef-Adobe-Display-PostScript'
          'BSD-3-Clause' 
@@ -82,7 +82,7 @@ _install() {
 package_xlibre-xserver-common-beta() {
   pkgdesc="XLibre fork of X.Org Xorg server common files"
   depends=(xkeyboard-config xorg-xkbcomp xorg-setxkbmap)
-  provides=('xlibre-xserver-common' 'xorg-server-common')
+  provides=('xlibre-xserver-common' 'xlibre-xserver-common=25.1' 'xorg-server-common')
   conflicts=('xlibre-xserver-common' 'xorg-server-common' "xorg-server<$pkgver")
 
   _install fakeinstall/usr/lib/xorg/protocol.txt
@@ -98,7 +98,7 @@ package_xlibre-xserver-beta() {
   depends=(xlibre-xserver-common-beta xlibre-input-libinput libepoxy libxfont2 pixman libunwind
            dbus libgl nettle libxdmcp sh glibc libxau libtirpc libbsd
            libpciaccess libdrm libxshmfence libxcvt) # FS#52949
-  provides=('xorg-server' 'X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'x11win-server')
+  provides=('xorg-server' 'xlibre-xserver=25.1' 'X-ABI-VIDEODRV_VERSION=28.0' 'X-ABI-XINPUT_VERSION=26.0' 'X-ABI-EXTENSION_VERSION=11.0' 'x-server' 'x11win-server')
   conflicts=('xlibre-xserver' 'xorg-server' 'nvidia-utils<=331.20' 'glamor-egl' 'xf86-video-modesetting')
   replaces=('xlibre-xserver' 'glamor-egl' 'xf86-video-modesetting')
 
@@ -172,7 +172,7 @@ package_xlibre-xserver-devel-beta() {
   depends=('xlibre-xserver-beta' 'X-ABI-XINPUT_VERSION=26.0' 'xorgproto' 'mesa' 'libpciaccess' 'pixman'
            # not technically required but almost every Xorg pkg needs it to build
            'xorg-util-macros')
-  provides=('xlibre-xserver-devel' 'xorg-server-devel')
+  provides=('xlibre-xserver-devel' 'xlibre-xserver-devel=25.1' 'xorg-server-devel')
   conflicts=('xlibre-xserver-devel' 'xorg-server-devel')
 
   _install fakeinstall/usr/include/xorg/*
