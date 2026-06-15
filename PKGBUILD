@@ -8,7 +8,7 @@ _pkgbase="${pkgbase%-*}"
 pkgname=('xlibre-xserver-beta' 'xlibre-xserver-xephyr-beta' 'xlibre-xserver-xvfb-beta'
          'xlibre-xserver-xnest-beta' 'xlibre-xserver-common-beta' 'xlibre-xserver-devel-beta')
 pkgver=25.1.6
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 license=('LicenseRef-Adobe-Display-PostScript'
          'BSD-3-Clause'
@@ -62,6 +62,7 @@ build() {
     -D udev=true \
     -D udev_kms=true \
     -D dtrace=false \
+    -D seatd_libseat=false \
     -D systemd_logind=true \
     -D suid_wrapper=true \
     -D linux_acpi=false \
@@ -69,6 +70,8 @@ build() {
     -D xkb_output_dir=/var/lib/xkb \
     -D libunwind=true
 
+  # Print config
+  meson configure build
   ninja -C build
 
   # fake installation to be seperated into packages
