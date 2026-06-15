@@ -1,7 +1,7 @@
 pkgbase = xlibre-xserver-beta
-	pkgver = 25.1.5
-	pkgrel = 3
-	url = https://github.com/X11Libre/xserver
+	pkgver = 25.1.6
+	pkgrel = 1
+	url = https://xlibre.net
 	arch = x86_64
 	groups = xlibre
 	license = LicenseRef-Adobe-Display-PostScript
@@ -19,7 +19,6 @@ pkgbase = xlibre-xserver-beta
 	license = SMLNJ
 	license = X11
 	license = X11-distribute-modifications-variant
-	makedepends = xlibre-xserver
 	makedepends = xorgproto
 	makedepends = pixman
 	makedepends = libx11
@@ -47,66 +46,64 @@ pkgbase = xlibre-xserver-beta
 	makedepends = xcb-util-keysyms
 	makedepends = libxshmfence
 	makedepends = libunwind
+	makedepends = systemd
 	makedepends = meson
-	makedepends = dbus
-	options = !debug
-	source = https://github.com/X11Libre/xserver/archive/refs/tags/xlibre-xserver-25.1.5.tar.gz
+	source = https://github.com/X11Libre/xserver/archive/refs/tags/xlibre-xserver-25.1.6.tar.gz
 	source = xvfb-run
 	source = xvfb-run.1
-	sha256sums = 7ee3612e7674595d7cef337d6955fddf02e63719cbc2607b29d80a17891eca0e
-	sha256sums = 27ce50f4432e5549e662db857118761fa9cd74c6900aac52c4db768c956838db
-	sha256sums = 2460adccd3362fefd4cdc5f1c70f332d7b578091fb9167bf88b5f91265bbd776
+	sha512sums = c55ab9360cbad9cbb2bfcd856553963b6c0e2af1fa6c00a38c551b50078afd640f456419d9cc13b09a2ae3e07351d761a872ae52c3ff73cc504efaa55db19859
+	sha512sums = 672375cb5028ba9cda286e317d17bd8c9a9039483e7f79c21f223fd08ba07655729e9f59a082f4b8f5d8de45a77a9e9affce1002fb8c6657e26ef1a490654e49
+	sha512sums = de5e2cb3c6825e6cf1f07ca0d52423e17f34d70ec7935e9dd24be5fb9883bf1e03b50ff584931bd3b41095c510ab2aa44d2573fd5feaebdcb59363b65607ff22
 
 pkgname = xlibre-xserver-beta
-	pkgdesc = XLibre fork of X.Org X server
-	depends = xlibre-xserver-common-beta
-	depends = xlibre-input-libinput
+	pkgdesc = XLibre X server
 	depends = libepoxy
 	depends = libxfont2
 	depends = pixman
+	depends = xlibre-xserver-common-beta
 	depends = libunwind
 	depends = dbus
 	depends = libgl
+	depends = xf86-input-libinput
 	depends = nettle
 	depends = libxdmcp
 	depends = sh
 	depends = glibc
 	depends = libxau
+	depends = systemd-libs
 	depends = libtirpc
 	depends = libbsd
 	depends = libpciaccess
 	depends = libdrm
 	depends = libxshmfence
 	depends = libxcvt
+	provides = xlibre-xserver
 	provides = xorg-server
-	provides = xlibre-xserver=25.1
 	provides = X-ABI-VIDEODRV_VERSION=28.0
 	provides = X-ABI-XINPUT_VERSION=26.0
 	provides = X-ABI-EXTENSION_VERSION=11.0
 	provides = x-server
-	provides = x11win-server
 	conflicts = xlibre-xserver
 	conflicts = xorg-server
 	conflicts = nvidia-utils<=331.20
 	conflicts = glamor-egl
 	conflicts = xf86-video-modesetting
-	replaces = xlibre-xserver
 	replaces = glamor-egl
 	replaces = xf86-video-modesetting
 
 pkgname = xlibre-xserver-xephyr-beta
-	pkgdesc = XLibre fork of X.Org nested X server that runs as an X application
-	depends = xlibre-xserver-common-beta
-	depends = X-ABI-XINPUT_VERSION=26.0
+	pkgdesc = A nested X server that runs as an X application
 	depends = libxfont2
 	depends = libgl
 	depends = libepoxy
 	depends = libunwind
+	depends = systemd-libs
+	depends = pixman
+	depends = xlibre-xserver-common-beta
 	depends = xcb-util-image
 	depends = xcb-util-renderutil
 	depends = xcb-util-wm
 	depends = xcb-util-keysyms
-	depends = pixman
 	depends = nettle
 	depends = libtirpc
 	depends = xcb-util
@@ -121,18 +118,18 @@ pkgname = xlibre-xserver-xephyr-beta
 	conflicts = xorg-server-xephyr
 
 pkgname = xlibre-xserver-xvfb-beta
-	pkgdesc = XLibre fork of X.Org virtual framebuffer X server
+	pkgdesc = Virtual framebuffer X server
 	license = MIT
 	license = GPL-2.0-only
-	depends = xlibre-xserver-common-beta
-	depends = X-ABI-XINPUT_VERSION=26.0
 	depends = libxfont2
 	depends = libunwind
 	depends = pixman
+	depends = xlibre-xserver-common-beta
 	depends = xorg-xauth
 	depends = libgl
 	depends = nettle
 	depends = libtirpc
+	depends = systemd-libs
 	depends = libxdmcp
 	depends = sh
 	depends = glibc
@@ -143,15 +140,15 @@ pkgname = xlibre-xserver-xvfb-beta
 	conflicts = xorg-server-xvfb
 
 pkgname = xlibre-xserver-xnest-beta
-	pkgdesc = XLibre fork of X.Org nested X server that runs as an X application
-	depends = xlibre-xserver-common-beta
-	depends = X-ABI-XINPUT_VERSION=26.0
+	pkgdesc = A nested X server that runs as an X application
 	depends = libxfont2
 	depends = libunwind
 	depends = libxext
 	depends = pixman
+	depends = xlibre-xserver-common-beta
 	depends = nettle
 	depends = libtirpc
+	depends = systemd-libs
 	depends = libxdmcp
 	depends = glibc
 	depends = libx11
@@ -162,28 +159,24 @@ pkgname = xlibre-xserver-xnest-beta
 	conflicts = xorg-server-xnest
 
 pkgname = xlibre-xserver-common-beta
-	pkgdesc = XLibre fork of X.Org Xorg server common files
+	pkgdesc = XLibre server common files
 	depends = xkeyboard-config
 	depends = xorg-xkbcomp
 	depends = xorg-setxkbmap
 	provides = xlibre-xserver-common
-	provides = xlibre-xserver-common=25.1
 	provides = xorg-server-common
 	conflicts = xlibre-xserver-common
 	conflicts = xorg-server-common
-	conflicts = xorg-server<25.1.5
 
 pkgname = xlibre-xserver-devel-beta
-	pkgdesc = XLibre fork of X.Org development files for the X.Org X server
+	pkgdesc = Development files for the XLibre Xserver
 	depends = xlibre-xserver-beta
-	depends = X-ABI-XINPUT_VERSION=26.0
 	depends = xorgproto
 	depends = mesa
 	depends = libpciaccess
 	depends = pixman
 	depends = xorg-util-macros
 	provides = xlibre-xserver-devel
-	provides = xlibre-xserver-devel=25.1
 	provides = xorg-server-devel
 	conflicts = xlibre-xserver-devel
 	conflicts = xorg-server-devel
