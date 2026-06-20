@@ -7,7 +7,7 @@ pkgbase=xlibre-xserver
 pkgname=('xlibre-xserver' 'xlibre-xserver-xephyr' 'xlibre-xserver-xvfb'
          'xlibre-xserver-xnest' 'xlibre-xserver-common' 'xlibre-xserver-devel')
 pkgver=25.1.6
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 license=('LicenseRef-Adobe-Display-PostScript'
          'BSD-3-Clause'
@@ -106,7 +106,7 @@ package_xlibre-xserver-common() {
 package_xlibre-xserver() {
   pkgdesc="XLibre X server"
   depends=(libepoxy libxfont2 pixman xlibre-xserver-common libunwind
-           dbus libgl xf86-input-libinput nettle
+           dbus libgl nettle
            libxdmcp sh glibc libxau systemd-libs libtirpc libbsd
            libpciaccess libdrm libxshmfence libxcvt) # FS#52949
   # see xorg-server-*/hw/xfree86/common/xf86Module.h for ABI versions - we provide major numbers that drivers can depend on

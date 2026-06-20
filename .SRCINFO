@@ -1,6 +1,6 @@
 pkgbase = xlibre-xserver
 	pkgver = 25.1.6
-	pkgrel = 2
+	pkgrel = 3
 	url = https://xlibre.net
 	arch = x86_64
 	groups = xlibre
@@ -64,7 +64,6 @@ pkgname = xlibre-xserver
 	depends = libunwind
 	depends = dbus
 	depends = libgl
-	depends = xf86-input-libinput
 	depends = nettle
 	depends = libxdmcp
 	depends = sh
