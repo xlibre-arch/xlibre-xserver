@@ -1,13 +1,14 @@
-# Maintainer: artist <artist@artixlinux.org>
 # Maintainer: callmetango
+# Contributor: artist <artist@artixlinux.org>
+# Contributor: Vitalii Kuzhdin <vitaliikuzhdin@gmail.com>
 # Contributor: AndyRTR <andyrtr@archlinux.org>
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgbase=xlibre-xserver
 pkgname=('xlibre-xserver' 'xlibre-xserver-xephyr' 'xlibre-xserver-xvfb'
          'xlibre-xserver-xnest' 'xlibre-xserver-common' 'xlibre-xserver-devel')
-pkgver=25.1.6
-pkgrel=3
+pkgver=25.1.7
+pkgrel=1
 arch=('x86_64')
 license=('LicenseRef-Adobe-Display-PostScript'
          'BSD-3-Clause'
@@ -37,7 +38,7 @@ source=(https://github.com/X11Libre/xserver/archive/refs/tags/${pkgbase}-"${pkgv
         xvfb-run # with updates from FC master
         xvfb-run.1
 )
-sha512sums=('c55ab9360cbad9cbb2bfcd856553963b6c0e2af1fa6c00a38c551b50078afd640f456419d9cc13b09a2ae3e07351d761a872ae52c3ff73cc504efaa55db19859'
+sha512sums=('2eafe86f9ed2095051ff13166bc4368c1d08e3f119441cabd9b74b8344b21ac519ad7afdc2d62391137a74f59b76cf0b0849a8853c156959b51f439a7ac0ef43'
             '672375cb5028ba9cda286e317d17bd8c9a9039483e7f79c21f223fd08ba07655729e9f59a082f4b8f5d8de45a77a9e9affce1002fb8c6657e26ef1a490654e49'
             'de5e2cb3c6825e6cf1f07ca0d52423e17f34d70ec7935e9dd24be5fb9883bf1e03b50ff584931bd3b41095c510ab2aa44d2573fd5feaebdcb59363b65607ff22')
 

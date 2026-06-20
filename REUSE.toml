@@ -19,6 +19,6 @@ path = [
     "*.hook",
     "xvfb-run*",
 ]
-SPDX-FileCopyrightText = "XLibre maintainers"
+SPDX-FileCopyrightText = "XLibre for Arch Linux maintainers"
 SPDX-FileCopyrightText = "Arch Linux contributors"
 SPDX-License-Identifier = "0BSD"
