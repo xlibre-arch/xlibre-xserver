@@ -66,6 +66,8 @@ build() {
     -D systemd_logind=true \
     -D suid_wrapper=true \
     -D linux_acpi=false \
+    -D legacy_nvidia_padding=true \
+    -D legacy_nvidia_340x=true \
     -D xkb_dir=/usr/share/X11/xkb \
     -D xkb_output_dir=/var/lib/xkb \
     -D libunwind=true
