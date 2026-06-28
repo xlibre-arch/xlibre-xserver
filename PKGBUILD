@@ -8,7 +8,7 @@ pkgbase=xlibre-xserver
 pkgname=('xlibre-xserver' 'xlibre-xserver-xephyr' 'xlibre-xserver-xvfb'
          'xlibre-xserver-xnest' 'xlibre-xserver-common' 'xlibre-xserver-devel')
 pkgver=25.1.8
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 license=('LicenseRef-Adobe-Display-PostScript'
          'BSD-3-Clause'

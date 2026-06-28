@@ -1,6 +1,6 @@
 pkgbase = xlibre-xserver
 	pkgver = 25.1.8
-	pkgrel = 1
+	pkgrel = 2
 	url = https://xlibre.net
 	arch = x86_64
 	groups = xlibre
